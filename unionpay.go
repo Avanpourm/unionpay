@@ -33,7 +33,7 @@ var ErrNotifyDataIsEmpty = errors.New("notify data is empty")
 type UnionPay struct {
 	testEnv bool
 
-	mchID string // 测试商户号 700000000000001
+	mchID string // 测试商户号 777290058177168
 	/*
 	   卡号	卡性质	机构名称	手机号码	密码	CVN2	有效期	证件号	姓名
 	   6216261000000000018	借记卡	平安银行	13552535506	123456			341126197709218366	全渠道
@@ -50,7 +50,7 @@ type UnionPay struct {
 
 func (up *UnionPay) getHost() string {
 	if up.testEnv {
-		return "https://101.231.204.80:5000"
+		return "https://gateway.test.95516.com"
 	}
 	return "https://gateway.95516.com"
 }
@@ -220,6 +220,7 @@ func newPrivateKey(path string) (priKey *rsa.PrivateKey, err error) {
 		return
 	}
 	if got, want := block.Type, "RSA PRIVATE KEY"; got != want {
+		// if got, want := block.Type, "PRIVATE KEY"; got != want {
 		err = fmt.Errorf("unknown key type %q, want %q", got, want)
 		return
 	}

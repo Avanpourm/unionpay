@@ -10,16 +10,18 @@ import (
 
 	"io"
 
-	"github.com/shima-park/unionpay"
+	"unionpay"
 )
 
 var (
-	pub   = "key.cert" //加密密钥路径(openssl pkcs12 -in PM_700000000000001_acp.pfx -clcerts -nokeys -out key.cert)
-	pri   = "key.pem"  //加密证书路径(openssl pkcs12 -in PM_700000000000001_acp.pfx -nocerts -nodes -out key.pem)
-	cert  = "acp_test_verify_sign.cer"
-	mchID = "700000000000001"
+	pub = "example/ssl/key.cert" //加密密钥路径(openssl pkcs12 -in PM_700000000000001_acp.pfx -clcerts -nokeys -out key.cert)
+	// pri   = "example/ssl/key.pem"  //加密证书路径(openssl pkcs12 -in PM_700000000000001_acp.pfx -nocerts -nodes -out key.pem)
+	pri  = "example/ssl/key.p1.pem"          //加密证书路径(openssl pkcs12 -in PM_700000000000001_acp.pfx -nocerts -nodes -out key.pem)
+	cert = "example/ssl/verify_sign_acp.cer" //openssl rsa -in key.pem -out key.p1.pem
+
+	mchID = "777290058177168"
 	/*
-		测试商户号 700000000000001
+		测试商户号 777290058177168
 		卡号	卡性质	机构名称	手机号码	密码	CVN2	有效期	证件号	姓名
 		6216261000000000018	借记卡	平安银行	13552535506	123456			341126197709218366	全渠道
 		6221558812340000	贷记卡	平安银行	13552535506	123456	123	1711	341126197709218366	互联网
@@ -30,10 +32,10 @@ var (
 	up = unionpay.NewPayment(mchID, pub, pri, cert).SetTestEnv(true)
 
 	// 示例监听的端口
-	port = ":9090"
+	port = ":8080"
 
 	// 通过 lt --port 9090 获取的外网地址
-	localTunnel = "https://afraid-moose-0.localtunnel.me"
+	localTunnel = "http://api.plusale.com"
 
 	returnURL = fmt.Sprintf("%s/%s", localTunnel, "unionpay/return")
 	notifyURL = fmt.Sprintf("%s/%s", localTunnel, "unionpay/notify-web")
