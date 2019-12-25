@@ -10,7 +10,7 @@ import (
 
 	"io"
 
-	"unionpay"
+	"github.com/Avanpourm/unionpay"
 )
 
 var (

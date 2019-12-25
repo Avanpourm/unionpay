@@ -1,4 +1,4 @@
-module unionpay
+module github.com/Avanpourm/unionpay
 
 go 1.12
 
