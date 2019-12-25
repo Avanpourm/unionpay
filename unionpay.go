@@ -265,6 +265,7 @@ func verify(certPubKey *rsa.PublicKey, vals url.Values, fields []string) (err er
 	kvs := KVpairs{}
 	for k := range vals {
 		if len(fields) > 0 && !Contains(fields, k) {
+			fmt.Printf("loss key:%v\n", k)
 			continue
 		}
 
@@ -287,11 +288,13 @@ func verify(certPubKey *rsa.PublicKey, vals url.Values, fields []string) (err er
 	var inSign []byte
 	inSign, err = base64.StdEncoding.DecodeString(signature)
 	if err != nil {
+		fmt.Printf("signatrue decode failed:%v, signatrue:%v\n", err, signature)
 		return
 	}
 
 	err = rsa.VerifyPKCS1v15(certPubKey, crypto.SHA1, hashed, inSign)
 	if err != nil {
+		fmt.Printf("signatrue verify failed:%v, certPubKey:%v, crypto.SHA1:%v, hashed:%v, inSign:%v\n", err, certPubKey, crypto.SHA1, hashed, inSign)
 		return
 	}
 	return

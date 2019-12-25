@@ -138,9 +138,9 @@ func ReturnWebServer(w http.ResponseWriter, req *http.Request) {
 
 	var html = fmt.Sprintf(`
 Result:%+v<br>
-<a href="/unionpay/consume-query?order_id=%s&query_id=%s&txn_time=%s">查询订单</a><br>
-<a href="/unionpay/consume-undo?query_id=%s&amount=%s">订单取消</a><br>
-<a href="/unionpay/consume-refund?query_id=%s&amount=%s">订单退款</a><br>
+<a href="/unionpay/query?order_id=%s&query_id=%s&txn_time=%s">查询订单</a><br>
+<a href="/unionpay/undo?query_id=%s&amount=%s">订单取消</a><br>
+<a href="/unionpay/refund?query_id=%s&amount=%s">订单退款</a><br>
 `, r,
 		r.OrderID, r.QueryID, r.TxnTime,
 		r.QueryID, r.TxnAmt,
@@ -162,6 +162,7 @@ func QueryServer(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprintf(w, "Error:%s", err.Error())
 		return
 	}
+	fmt.Printf("SUCCESS:%v", queryResp)
 
 	fmt.Fprintf(w, "%s", queryResp)
 	return

@@ -164,6 +164,7 @@ type FrontConsumeReturnResponse struct {
 	SettleDate         string // 清算日期
 	SettleCurrencyCode string // 清算货币
 	SettleAmt          string // 清算金额
+	ExchangeRate       string // 汇率 C 境外交易时返回
 }
 
 func (up *UnionPay) FrontConsumeReturn(req *http.Request) (resp *FrontConsumeReturnResponse, err error) {
@@ -201,6 +202,7 @@ func (up *UnionPay) FrontConsumeReturn(req *http.Request) (resp *FrontConsumeRet
 		"settleDate",
 		"settleCurrencyCode",
 		"settleAmt",
+		"exchangeRate",
 	}
 
 	if err = verify(up.verifySignCert.PublicKey.(*rsa.PublicKey), vals, fields); err != nil {
@@ -236,6 +238,7 @@ func (up *UnionPay) FrontConsumeReturn(req *http.Request) (resp *FrontConsumeRet
 		SettleDate:         vals.Get("settleDate"),
 		SettleCurrencyCode: vals.Get("settleCurrencyCode"),
 		SettleAmt:          vals.Get("settleAmt"),
+		ExchangeRate:       vals.Get("exchangeRate"),
 	}
 
 	if resp.RespCode != "00" {
